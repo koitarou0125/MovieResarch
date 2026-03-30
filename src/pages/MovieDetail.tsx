@@ -1,6 +1,8 @@
 ﻿import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ReviewForm } from "../components/ReviewForm";
+import { ReviewList } from "../components/ReviewList";
+import { FavoriteButton } from "../components/FavoriteButton";
 
 const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 interface Movie {
@@ -30,18 +32,33 @@ export default function MovieDetail() {
     fetchMovie();
   }, [id]);
 
-  if (!movie) return <div>読み込み中...</div>;
+  if (!movie)
+    return (
+      <main className="page page-detail">
+        <p>読み込み中...</p>
+      </main>
+    );
 
   return (
-    <div>
+    <main className="page page-detail">
       {error && <p>{error}</p>}
       <h1>{movie.title}</h1>
-      <img src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} alt={movie.title} />
-      <p>評価: {movie.vote_average}</p>
-      <p>概要: {movie.overview}</p>
-      <p>公開日: {movie.release_date}</p>
+      <div className="movie-detail">
+        <img className="detail-poster" src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} alt={movie.title} />
+        <div>
+          <FavoriteButton movieId={id} title={movie.title} poster_path={movie.poster_path} />
+          <p>評価: {movie.vote_average}</p>
+          <p>概要: {movie.overview}</p>
+          <p>公開日: {movie.release_date}</p>
+        </div>
+      </div>
 
-      <ReviewForm id={id} />
-    </div>
+      <section className="review-form">
+        <ReviewForm id={id} />
+      </section>
+      <section className="review-list">
+        <ReviewList movieId={id} />
+      </section>
+    </main>
   );
 }

@@ -31,12 +31,14 @@ export const ReviewForm = ({ id }: { id: string | undefined }) => {
   };
 
   return (
-    <div>
+    <section className="review-form">
       <h2>レビューを書く</h2>
       {error && <p>{error}</p>}
       {success && <p>{success}</p>}
-      <input type="text" placeholder="テキストを入力してください" value={review} onChange={(e) => setReview(e.target.value)} />
-      <button onClick={handleSubmit}>投稿</button>
-    </div>
+      <div className="form-row">
+        <input type="text" placeholder="テキストを入力してください" value={review} onChange={(e) => setReview(e.target.value)} />
+        <button onClick={handleSubmit}>投稿</button>
+      </div>
+    </section>
   );
 };

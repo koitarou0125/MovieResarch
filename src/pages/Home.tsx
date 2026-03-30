@@ -29,23 +29,29 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <main className="page page-home">
       <h1>映画検索</h1>
-      <input type="text" placeholder="映画のタイトルを入力" value={query} onChange={(e) => setQuery(e.target.value)} />
-      <button onClick={searchMovies}>検索</button>
+      <div className="search-row">
+        <input type="text" placeholder="映画のタイトルを入力" value={query} onChange={(e) => setQuery(e.target.value)} />
+        <button onClick={searchMovies}>検索</button>
+      </div>
       {loading && <p>検索中...</p>}
       {error && <p>{error}</p>}
-      <ul>
-        {results.map((movie) => (
-          <Link to={`/movie/${movie.id}`} key={movie.id}>
-            <li>
-              <img src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} alt={movie.title} />
-              {movie.title}
-              {movie.vote_average}
+      {results.length > 0 ? (
+        <ul className="movie-list">
+          {results.map((movie) => (
+            <li key={movie.id} className="movie-item">
+              <Link to={`/movie/${movie.id}`}>
+                <img src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`} alt={movie.title} />
+                <h3>{movie.title}</h3>
+                <p>評価: {movie.vote_average}</p>
+              </Link>
             </li>
-          </Link>
-        ))}
-      </ul>
-    </div>
+          ))}
+        </ul>
+      ) : (
+        !loading && <p>映画を検索してください。</p>
+      )}
+    </main>
   );
 }

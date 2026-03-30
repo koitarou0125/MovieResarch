@@ -12,17 +12,22 @@ export const Header = () => {
   };
 
   return (
-    <header>
+    <header className="app-header">
       <Link to="/">
         <h1>映画検索サイト</h1>
       </Link>
-      {user ? (
-        <button onClick={handleSignOut}>ログアウト</button>
-      ) : (
-        <Link to="/login">
-          <button>ログイン</button>
-        </Link>
-      )}
+      <nav>
+        {user ? (
+          <>
+            <Link to="/favorites">お気に入り</Link>
+            <button onClick={handleSignOut}>ログアウト</button>
+          </>
+        ) : (
+          <Link to="/login">
+            <button>ログイン</button>
+          </Link>
+        )}
+      </nav>
     </header>
   );
 };
